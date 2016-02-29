@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Education City</title>
+
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+  <body>
+      
+          <h1>St. Augustine Education City</h1>
+    <!-- Our web map and content will go here -->
+    <div id="map" style="width: 1200px; height: 650px"></div>
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    <script>
+        
+        var map = L.map('map',{ center: [10.643622, -61.393406], zoom: 14});
+     
+
+      L.tileLayer('http://{s}.api.cartocdn.com/base-dark-matter/{z}/{x}/{y}.png', {
+        attribution: 'CartoDB'
+      }).addTo(map);
+        
+        var CARTOCSS = [
+      'Map {',
+            '-torque-frame-count:115;',
+            '-torque-animation-duration:25;',
+            '-torque-time-attribute:"occ_date";',
+            '-torque-aggregation-function:"count(cartodb_id)";',
+            '-torque-resolution:2;',
+            '-torque-data-aggregation:linear;',
+      '}',
+      '#layer {',
+      '  marker-width: 3;',
+      '  marker-fill-opacity: 0.8;',
+      '  marker-fill: #FEE391; ',
+      '  comp-op: "lighten";',
+      '}'
+    ].join('\n');
+
+    var torqueLayer = new L.TorqueLayer({
+      user       : 'azadine',
+      table      : 'edu_city_srcs',
+      cartocss: CARTOCSS
+    });
+    torqueLayer.addTo(map);
+    torqueLayer.play()
+    </script>
+  </body>
